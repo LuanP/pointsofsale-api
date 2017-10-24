@@ -11,7 +11,7 @@ const errorSource = {
 const ResponseHandler = () => {}
 
 ResponseHandler.errorHandler = () => {}
-ResponseHandler.errorSource = errorSource
+ResponseHandler.errorHandler.errorSource = errorSource
 
 /**
  * Method: Create an error object to throw, with luizalabs-commons pattern
