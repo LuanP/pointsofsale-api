@@ -19,12 +19,11 @@ module.exports = async (ctx, next) => {
       throw error.resourceNotFound()
     }
   } catch (err) {
-    if (err.output.statusCode) {
+    if (err.output && err.output.statusCode && err.output.payload) {
       ctx.status = err.output.statusCode
-    }
-    if (err.output.payload) {
       ctx.body = err.output.payload
     }
+
     ctx.app.emit('error', err)
   }
 }

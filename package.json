@@ -65,6 +65,7 @@
     "bunyan-logstash-tcp": "^1.0.0",
     "co-body": "^5.1.1",
     "config": "^1.27.0",
+    "cpf_cnpj": "^0.2.0",
     "joi": "^13.0.1",
     "knex": "^0.13.0",
     "koa": "^2.3.0",

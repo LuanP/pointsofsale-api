@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
       field: 'owner_name',
       allowNull: false
     },
-    documentNumber: {
+    document: {
       type: DataTypes.STRING(14),
       field: 'document_number',
       allowNull: false
