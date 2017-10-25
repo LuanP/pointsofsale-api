@@ -1,7 +1,7 @@
 'use strict'
 
 const Joi = require('joi')
-const errorHandler = require('./../../helpers/responseHandler').errorHandler
+const boom = require('boom')
 
 module.exports.create = async (ctx) => {
   const schema = Joi.object().keys({
@@ -28,7 +28,7 @@ module.exports.create = async (ctx) => {
 
   const result = Joi.validate(ctx.request.body, schema, { abortEarly: false })
   if (result.error) {
-    throw errorHandler.badRequest(result.error, errorHandler.errorSource.params)
+    throw boom.badRequest(result.error)
   }
 
   // const data = result.value
