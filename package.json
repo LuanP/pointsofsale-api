@@ -75,7 +75,7 @@
     "koa-router": "^7.2.1",
     "mysql2": "^1.4.2",
     "ramda": "^0.25.0",
-    "sequelize": "^4.15.0"
+    "sequelize": "git://github.com/luanp/sequelize.git#v4.17.3"
   },
   "engines": {
     "node": "8.7.0",
