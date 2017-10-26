@@ -1,0 +1,36 @@
+version: '3'
+services:
+  db:
+    image: "mysql:5.7"
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pointsofsale
+      MYSQL_USER: pointsofsale
+      MYSQL_PASSWORD: pointsofsale
+  web:
+    build: .
+    environment:
+      PORT: 8080
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: pointsofsale
+      DB_USER: pointsofsale
+      DB_PASSWORD: pointsofsale
+      NODE_CONFIG_DIR: ./src/config
+      NODE_ENV: development
+    ports:
+      - "8080:8080"
+    links:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - db
+volumes:
+  db_data:

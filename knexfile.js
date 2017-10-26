@@ -1,9 +1,8 @@
-'use strict'
-
-let db = require('config').db
+const config = require('config')
+const db = config.db
 
 const dbConfig = {
-  client: db.options.dialect,
+  client: config.knex_dialect,
   connection: {
     host: db.options.host,
     port: db.options.port,

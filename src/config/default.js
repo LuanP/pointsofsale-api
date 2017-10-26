@@ -11,6 +11,7 @@ if (currentEnv === 'development') {
 var base = {
   env: currentEnv,
   port: process.env.PORT || 9000,
+  knex_dialect: 'mysql2',
   db: {
     name: process.env.DB_NAME || 'pointsofsale',
     username: process.env.DB_USERNAME || 'pointsofsale',
