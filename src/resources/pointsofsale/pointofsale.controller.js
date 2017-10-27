@@ -62,17 +62,13 @@ module.exports.create = async (ctx) => {
 module.exports.get = async (ctx) => {
   const schema = Joi.object().keys({
     id: Joi.number().integer().positive().example(1),
-      // .when('lng', {is: Joi.empty(), then: Joi.required()})
-      // .when('lat', {is: Joi.empty(), then: Joi.required()}),
     lng: Joi.number().example(-46.57421),
-      // .when('id', {is: Joi.empty(), then: Joi.required()}),
     lat: Joi.number().example(-21.785741)
-      // .when('id', {is: Joi.empty(), then: Joi.required()})
   }).and('lat', 'lng').nand('lat', 'id').nand('lng', 'id').required()
 
   const result = Joi.validate(ctx.query, schema, { abortEarly: false })
   if (result.error) {
-    throw result.error
+    throw boom.badRequest(result.error)
   }
 
   const data = result.value

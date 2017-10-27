@@ -147,4 +147,57 @@ describe('Points of sale resource', () => {
         })
     })
   })
+
+  describe('retrieving a point of sale', () => {
+    it('GET by id that does not exists - returns a not found 404', (done) => {
+      request.get('/v1/pointsofsale?id=999')
+        .expect(404)
+        .expect('x-api-version', pjson.version)
+        .end((err, res) => {
+          assert.strictEqual(err, null, 'error is null')
+
+          expect(res.body).to.deep.equal({
+            statusCode: 404,
+            error: 'Not Found',
+            message: 'object was not found'
+          })
+
+          done()
+        })
+    })
+
+    it('GET by lng, lat that does not exists - returns a not found 404', (done) => {
+      request.get('/v1/pointsofsale?lng=-46.57421&lat=-21.785741')
+        .expect(404)
+        .expect('x-api-version', pjson.version)
+        .end((err, res) => {
+          assert.strictEqual(err, null, 'error is null')
+
+          expect(res.body).to.deep.equal({
+            statusCode: 404,
+            error: 'Not Found',
+            message: 'object was not found'
+          })
+
+          done()
+        })
+    })
+
+    it('GET by lng, lat and id - raises joi validation and returns bad request 400', (done) => {
+      request.get('/v1/pointsofsale?id=1&lng=-46.57421&lat=-21.785741')
+        .expect(400)
+        .expect('x-api-version', pjson.version)
+        .end((err, res) => {
+          assert.strictEqual(err, null, 'error is null')
+
+          expect(res.body).to.deep.equal({
+            statusCode: 400,
+            error: 'Bad Request',
+            message: '"lat" must not exist simultaneously with [id]. "lng" must not exist simultaneously with [id]'
+          })
+
+          done()
+        })
+    })
+  })
 })
