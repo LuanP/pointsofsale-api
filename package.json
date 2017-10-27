@@ -10,7 +10,7 @@
     "test": "npm run lint && NODE_CONFIG_DIR=./src/config NODE_ENV=test nyc npm run test-mocha",
     "test-mocha": "NODE_CONFIG_DIR=./src/config NODE_ENV=test mocha --harmony --exit ./src/**/*.spec.js",
     "test-mocha-watch": "NODE_CONFIG_DIR=./src/config NODE_ENV=test mocha --watch --harmony ./src/**/*.spec.js",
-    "migrate": "cross-env NODE_CONFIG_DIR=./src/config knex migrate:latest",
+    "migrate": "NODE_CONFIG_DIR=./src/config knex migrate:latest",
     "precommit": "npm run git-hook",
     "prepush": "npm run git-hook",
     "git-hook": "npm run lint -s && npm run test -s",
