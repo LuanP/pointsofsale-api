@@ -76,7 +76,7 @@ module.exports.get = async (ctx) => {
 
   if (data.id) {
     response = await models.getById(data.id)
-  } else {
+  } else if (data.lng && data.lat) {
     response = await models.getByLngLat(data.lng, data.lat)
   }
 
