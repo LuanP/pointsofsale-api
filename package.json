@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "heroku-postbuild": "npm run migrate",
     "local": "cross-env npm run migrate && NODE_CONFIG_DIR=./src/config NODE_ENV=development nodemon --inspect src/server.js",
     "test": "npm run lint && NODE_CONFIG_DIR=./src/config NODE_ENV=test nyc npm run test-mocha",
     "test-mocha": "NODE_CONFIG_DIR=./src/config NODE_ENV=test mocha --harmony --exit ./src/**/*.spec.js",
