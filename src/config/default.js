@@ -10,7 +10,7 @@ if (currentEnv === 'development') {
 // default config
 var base = {
   env: currentEnv,
-  port: process.env.PORT || 9000,
+  port: process.env.PORT || 8080,
   knex_dialect: 'mysql2',
   db: {
     name: process.env.DB_NAME || 'pointsofsale',
