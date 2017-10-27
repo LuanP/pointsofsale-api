@@ -44,6 +44,10 @@ module.exports.create = async (ctx) => {
   data.document = CNPJ.strip(data.document)
 
   const response = await models.create(data)
+    .catch((err) => {
+      // TODO: check for SequelizeUniqueConstraintError exception raised
+      throw boom.badRequest('duplicated document', err)
+    })
 
   if (!response || response.length === 0) {
     throw boom.badRequest('failed creating object')
