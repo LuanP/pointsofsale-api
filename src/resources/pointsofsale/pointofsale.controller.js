@@ -43,11 +43,13 @@ module.exports.create = async (ctx) => {
   // cleans the document making it only contain numbers
   data.document = CNPJ.strip(data.document)
 
-  const response = await models.create(data)
+  // check if a row with the document already exists
+  await models.checkDuplicityByDocumentNumber(data.document)
     .catch((err) => {
-      // TODO: check for SequelizeUniqueConstraintError exception raised
       throw boom.badRequest('duplicated document', err)
     })
+
+  const response = await models.create(data)
 
   if (!response || response.length === 0) {
     throw boom.badRequest('failed creating object')

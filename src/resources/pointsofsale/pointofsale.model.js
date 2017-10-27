@@ -16,6 +16,17 @@ PointOfSale.getById = async (id) => {
   })
 }
 
+PointOfSale.checkDuplicityByDocumentNumber = async (documentNumber) => {
+  return PointOfSaleSchema.findOne({
+    where: { document: documentNumber }
+  })
+  .then((data) => {
+    if (data !== null) {
+      throw new Error('document already exists')
+    }
+  })
+}
+
 PointOfSale.getByLngLat = async (lng, lat) => {
   return new Promise((resolve, reject) => {
     Sequelize.query(
