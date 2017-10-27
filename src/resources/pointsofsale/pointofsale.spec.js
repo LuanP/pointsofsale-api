@@ -199,5 +199,83 @@ describe('Points of sale resource', () => {
           done()
         })
     })
+
+    it('GET by lng without lat - raises joi validation and returns bad request 400', (done) => {
+      request.get('/v1/pointsofsale?lng=-46.57421')
+        .expect(400)
+        .expect('x-api-version', pjson.version)
+        .end((err, res) => {
+          assert.strictEqual(err, null, 'error is null')
+
+          expect(res.body).to.deep.equal({
+            statusCode: 400,
+            error: 'Bad Request',
+            message: '"value" contains [lng] without its required peers [lat]'
+          })
+
+          done()
+        })
+    })
+
+    it('GET by lat without lng - raises joi validation and returns bad request 400', (done) => {
+      request.get('/v1/pointsofsale?lat=21.785741')
+        .expect(400)
+        .expect('x-api-version', pjson.version)
+        .end((err, res) => {
+          assert.strictEqual(err, null, 'error is null')
+
+          expect(res.body).to.deep.equal({
+            statusCode: 400,
+            error: 'Bad Request',
+            message: '"value" contains [lat] without its required peers [lng]'
+          })
+
+          done()
+        })
+    })
+
+    it('GET successfull search by id - returns ok 200', (done) => {
+      let resultObj = R.clone(defaultObj)
+      resultObj.document = cleanedDocumentNumber
+      resultObj.id = 1
+
+      let stub = sinon.stub(PointOfSale, 'findOne').resolves(resultObj)
+
+      request.get('/v1/pointsofsale?id=1')
+        .expect(200)
+        .expect('x-api-version', pjson.version)
+        .end((err, res) => {
+          assert.strictEqual(err, null, 'error is null')
+
+          sinon.assert.calledOnce(stub)
+
+          expect(res.body.records[0]).to.deep.equal(resultObj)
+
+          stub.restore()
+          done()
+        })
+    })
+
+    it('GET successfull search by lng, lat - returns ok 200', (done) => {
+      let resultObj = R.clone(defaultObj)
+      resultObj.document = cleanedDocumentNumber
+      resultObj.id = 1
+
+      let stub = sinon.stub(models, 'getByLngLat').resolves(resultObj)
+
+      request.get('/v1/pointsofsale?lng=31.57421&lat=21.785741')
+        .expect(200)
+        .expect('x-api-version', pjson.version)
+        .end((err, res) => {
+          assert.strictEqual(err, null, 'error is null')
+
+          sinon.assert.calledOnce(stub)
+
+          expect(res.body.records[0]).to.deep.equal(resultObj)
+
+          stub.restore()
+          done()
+        })
+    })
   })
 })
