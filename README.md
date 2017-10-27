@@ -64,6 +64,10 @@ Then, run the following commands:
     heroku ps:scale web=1
     heroku addons:create jawsdb:kitefin
 
+After that, with any update in the code, just run:
+
+    git push heroku master
+
 Now you have to set the variables available in your just created add-on (data store / database). You can check then logged in your account and [clicking here](https://dashboard.jawsdb.com/mysql/dashboard).
 
 ```sh
